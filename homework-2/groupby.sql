@@ -33,14 +33,12 @@ ORDER BY total_weight DESC;
 -- 6. страны, в которых зарегистрированы и заказчики (customers) и поставщики (suppliers) и работники (employees).
 SELECT country
 FROM customers
-WHERE country IN (
-    SELECT country
-    FROM suppliers
-)
-AND country IN (
-    SELECT country
-    FROM employees
-);
+INTERSECT
+SELECT country
+FROM suppliers
+INTERSECT
+SELECT country
+FROM employees;
 
 
 -- 7. страны, в которых зарегистрированы и заказчики (customers) и поставщики (suppliers), но не зарегистрированы работники (employees).
@@ -50,7 +48,6 @@ WHERE country IN (
     SELECT country
     FROM suppliers
 )
-AND country NOT IN (
-    SELECT country
-    FROM employees
-);
+EXCEPT
+SELECT country
+FROM employees;
